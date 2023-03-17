@@ -167,7 +167,7 @@ SIMU_OPTION += -DPATCH_SIZE=8
 
 # GPU acceleration
 # --> must set GPU_ARCH as well
-#SIMU_OPTION += -DGPU
+SIMU_OPTION += -DGPU
 
 # GPU architecture: FERMI/KEPLER/MAXWELL/PASCAL/VOLTA/TURING/AMPERE
 SIMU_OPTION += -DGPU_ARCH=TURING
@@ -237,16 +237,16 @@ SIMU_OPTION += -DRANDOM_NUMBER=RNG_GNU_EXT
 
 # intel
 # -------------------------------------------------------------------------------
-# CXX         = icpc                                      # serial compiler
+ CXX         = icpc                                      # serial compiler
 ##CXX         = $(MPI_PATH)/bin/mpicxx                    # MPI compiler
 ##CXX         = CC                                        # cray wrapper script
-# CXXFLAG     = -g -O3                                    # general flags
+ CXXFLAG     = -g -O3                                    # general flags
 ##CXXFLAG     = -g -O3 -std=c++11 #-gxx-name=YOUR_G++
 ##CXXFLAG     = -g -fast
-# CXXFLAG    += -w1                                       # warning flags
-# CXXFLAG    += -fp-model precise                         # disable optimizations that are not value-safe
-# OPENMPFLAG  = -fopenmp                                  # openmp flag
-# LIB         = -limf                                     # libraries and linker flags
+ CXXFLAG    += -w1                                       # warning flags
+ CXXFLAG    += -fp-model precise                         # disable optimizations that are not value-safe
+ OPENMPFLAG  = -fopenmp                                  # openmp flag
+ LIB         = -limf                                     # libraries and linker flags
 #
 ## for debug only
 #ifeq "$(filter -DGAMER_DEBUG, $(SIMU_OPTION))" "-DGAMER_DEBUG"
@@ -255,38 +255,38 @@ SIMU_OPTION += -DRANDOM_NUMBER=RNG_GNU_EXT
 #endif
 #
 ## suppress warning when OpenMP is disabled
-#ifeq "$(filter -DOPENMP, $(SIMU_OPTION))" ""
-# CXXFLAG    += -Wno-unknown-pragmas -diag-disable 3180
-#endif
+ifeq "$(filter -DOPENMP, $(SIMU_OPTION))" ""
+ CXXFLAG    += -Wno-unknown-pragmas -diag-disable 3180
+endif
 
 
 # gnu
 # -------------------------------------------------------------------------------
- CXX         = g++                                       # serial compiler
+# CXX         = g++                                       # serial compiler
 #CXX         = $(MPI_PATH)/bin/mpicxx                    # MPI compiler
 #CXX         = CC                                        # cray wrapper script
- CXXFLAG     = -g -O3                                    # general flags
+# CXXFLAG     = -g -O3                                    # general flags
 #CXXFLAG     = -g -O3 -std=c++11
 #CXXFLAG     = -g -Ofast
- CXXFLAG    += -Wall -Wextra                             # warning flags
- CXXFLAG    += -Wno-unused-variable -Wno-unused-parameter \
+# CXXFLAG    += -Wall -Wextra                             # warning flags
+# CXXFLAG    += -Wno-unused-variable -Wno-unused-parameter \
                -Wno-maybe-uninitialized -Wno-unused-but-set-variable \
                -Wno-unused-result -Wno-unused-function \
 	       -Wno-implicit-fallthrough -Wno-parentheses
- OPENMPFLAG  = -fopenmp                                  # openmp flag
- LIB         =                                           # libraries and linker flags
+# OPENMPFLAG  = -fopenmp                                  # openmp flag
+# LIB         =                                           # libraries and linker flags
 
 # for debug only
-ifeq "$(filter -DGAMER_DEBUG, $(SIMU_OPTION))" "-DGAMER_DEBUG"
-#CXXFLAG    += -fstack-protector-all
-#CXXFLAG    += -fsanitize=undefined -fsanitize=address
+#ifeq "$(filter -DGAMER_DEBUG, $(SIMU_OPTION))" "-DGAMER_DEBUG"
+##CXXFLAG    += -fstack-protector-all
+##CXXFLAG    += -fsanitize=undefined -fsanitize=address
 #LIB        += -fsanitize=undefined -fsanitize=address
-endif
+#endif
 
-# suppress warning when OpenMP is disabled
-ifeq "$(filter -DOPENMP, $(SIMU_OPTION))" ""
- CXXFLAG    += -Wno-unknown-pragmas
-endif
+## suppress warning when OpenMP is disabled
+#ifeq "$(filter -DOPENMP, $(SIMU_OPTION))" ""
+# CXXFLAG    += -Wno-unknown-pragmas
+#endif
 
 
 # CUDA
@@ -353,13 +353,13 @@ LIBYT_PATH   :=
 #LIBYT_PATH   := /home/hyschive/project/libyt/libyt.dev/libyt
 
 # NTU-eureka (default: openmpi-intel)
-#CUDA_PATH    := /software/cuda/default
-#FFTW_PATH    := /software/fftw/default
-#MPI_PATH     := /software/openmpi/default
-#HDF5_PATH    := /software/hdf5/default
-#GRACKLE_PATH :=
-#GSL_PATH     := /software/gsl/default
-#LIBYT_PATH   :=
+CUDA_PATH    := /software/cuda/default
+FFTW_PATH    := /software/fftw/default
+MPI_PATH     := /software/openmpi/default
+HDF5_PATH    := /software/hdf5/default
+GRACKLE_PATH :=
+GSL_PATH     := /software/gsl/default
+LIBYT_PATH   :=
 
 # NTU-hulk (openmpi-intel-qlc)
 #CUDA_PATH    := /opt/gpu/cuda/4.2
